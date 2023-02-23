@@ -34,12 +34,39 @@ public class RenameMeResource {
         //System.out.println("--------------->"+count);
         return "{\"count\":"+count+"}";  //Done manually so no need for a DTO
     }
+
+    @GET
+    @Path("{id}")
+    @Produces({MediaType.APPLICATION_JSON})
+    public String getRenameMeById(@PathParam("id") int id){
+        RenameMeDTO rmto = FACADE.getById(id);
+        return GSON.toJson(rmto);
+    }
+
+
+
+    @PUT
+    @Produces({MediaType.APPLICATION_JSON})
+    @Consumes({MediaType.APPLICATION_JSON})
+    @Path("{id}")
+    public String putRenameMe(@PathParam("id") int id, String input) throws Exception {
+        RenameMeDTO rmdto = GSON.fromJson(input, RenameMeDTO.class);
+        System.out.println(rmdto);
+        rmdto.setId(id);
+        rmdto = FACADE.update(rmdto);
+        return GSON.toJson(rmdto);
+    }
+
+
+
+
     @POST
     @Produces({MediaType.APPLICATION_JSON})
     @Consumes({MediaType.APPLICATION_JSON})
     public Response postExample(String input){
         RenameMeDTO rmdto = GSON.fromJson(input, RenameMeDTO.class);
         System.out.println(rmdto);
+        rmdto = FACADE.create(rmdto);
         return Response.ok().entity(rmdto).build();
     }
 }

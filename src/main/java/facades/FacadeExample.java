@@ -84,4 +84,21 @@ public class FacadeExample {
         fe.getAll().forEach(dto->System.out.println(dto));
     }
 
+    public RenameMeDTO update(RenameMeDTO rm) throws Exception{
+        EntityManager em = getEntityManager();
+        RenameMe renameMe = em.find(RenameMe.class, rm.getId());
+        if (renameMe == null)
+            throw new Exception("The RenameMe entity with ID: "+rm.getId()+" Was not found");
+
+        try {
+            em.getTransaction().begin();
+            renameMe.setDummyStr1(rm.getDummyStr1());
+            renameMe.setDummyStr2(rm.getDummyStr2());
+            em.getTransaction().commit();
+        } finally {
+            em.close();
+        }
+        return new RenameMeDTO(renameMe);
+    }
+
 }

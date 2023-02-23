@@ -57,10 +57,12 @@ public class RenameMeDTO {
     public String toString() {
         return "RenameMeDTO{" + "id=" + id + ", str1=" + str1 + ", str2=" + str2 + '}';
     }
-    
-    
-    
-    
-    
-    
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
 }
